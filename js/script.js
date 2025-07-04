@@ -39,10 +39,9 @@ function createFallingFlowers() {
     document.body.appendChild(flower);
   }
 }
+
 // COUNTDOWN
 const countdownEl = document.getElementById('countdown');
-
-// Ngày cưới: 24/01/2026, 17:30
 const weddingDate = new Date("2026-01-24T17:30:00");
 
 function updateCountdown() {
@@ -66,13 +65,14 @@ function updateCountdown() {
 updateCountdown(); // gọi 1 lần đầu
 const timer = setInterval(updateCountdown, 1000); // gọi mỗi giây
 
+// Lời chúc slide + fade in/out
 async function loadWishesFromCSV() {
   const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRG_77ZsZ1LmkMqv1Dda9ICZe7_ImAll66BvjenW_p0zbfuosw-2J9gL1A3wmHvAgTZWD1DGhjnNSEP/pub?gid=172870827&single=true&output=csv";
 
   try {
     const res = await fetch(csvUrl);
     const text = await res.text();
-    const rows = text.split('\n').slice(1); // bỏ dòng tiêu đề
+    const rows = text.split('\n').slice(1);
 
     const wishes = [];
     rows.forEach(line => {
@@ -85,24 +85,32 @@ async function loadWishesFromCSV() {
 
     const board = document.getElementById("wish-board");
     if (!board) return;
-    board.innerHTML = "";
-
     let current = 0;
-    function showWish(idx) {
-      const wish = wishes[idx];
-      board.innerHTML = `
-        <div style="margin: 1rem auto; padding: 1rem; border: 1px dashed #ccc; border-radius: 8px; max-width: 600px; background-color: #fffdf8; min-height: 60px;">
-          <strong>${wish.name}</strong>: ${wish.message}
-        </div>
-      `;
+
+    function showWish(idx, fadeType = "in") {
+      board.classList.remove("fade-in-wish", "fade-out-wish");
+      void board.offsetWidth; // force reflow for animation restart
+      if (fadeType === "in") {
+        board.innerHTML = `
+          <div style="margin: 1rem auto; padding: 1rem; border: 1px dashed #ccc; border-radius: 8px; max-width: 600px; background-color: #fffdf8; min-height: 60px;">
+            <strong>${wishes[idx].name}</strong>: ${wishes[idx].message}
+          </div>
+        `;
+        board.classList.add("fade-in-wish");
+      } else {
+        board.classList.add("fade-out-wish");
+      }
     }
 
     if (wishes.length > 0) {
-      showWish(current);
+      showWish(current, "in");
       setInterval(() => {
-        current = (current + 1) % wishes.length;
-        showWish(current);
-      }, 5000); // 5 giây
+        showWish(current, "out");
+        setTimeout(() => {
+          current = (current + 1) % wishes.length;
+          showWish(current, "in");
+        }, 400); // thời gian fade out (ms)
+      }, 5000); // đổi slide mỗi 5 giây
     } else {
       board.innerText = "Chưa có lời chúc nào.";
     }
@@ -114,11 +122,22 @@ async function loadWishesFromCSV() {
 }
 
 window.addEventListener("load", loadWishesFromCSV);
-const menuToggle = document.getElementById('menu-toggle');
-const navUl = document.querySelector('nav ul');
 
-if(menuToggle && navUl) {
-  menuToggle.addEventListener('click', () => {
-    navUl.classList.toggle('active');
+// Fade in section khi xuất hiện trong viewport
+document.querySelectorAll('section').forEach(section => {
+  section.classList.add('fade-section');
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('active');
+    } else {
+      entry.target.classList.remove('active');
+    }
   });
-}
+}, { threshold: 0.2 });
+
+document.querySelectorAll('section').forEach(section => {
+  observer.observe(section);
+});

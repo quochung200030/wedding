@@ -103,3 +103,11 @@ async function loadWishesFromCSV() {
 }
 
 window.addEventListener("load", loadWishesFromCSV);
+const menuToggle = document.getElementById('menu-toggle');
+const navUl = document.querySelector('nav ul');
+
+if(menuToggle && navUl) {
+  menuToggle.addEventListener('click', () => {
+    navUl.classList.toggle('active');
+  });
+}

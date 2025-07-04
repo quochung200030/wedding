@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thiệp Cưới Quốc Hưng & Quỳnh Như</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="loader"><div class="spinner"></div></div>
+
+  <audio id="bg-music" loop>
+    <source src="assets/music/love.mp3" type="audio/mpeg">
+    Trình duyệt của bạn không hỗ trợ nhạc nền.
+  </audio>
+  <button id="music-toggle">🔊 Tắt nhạc</button>
+
+  <nav>
+    <ul>
+      <li><a href="#section-details">Tiệc cưới</a></li>
+      <li><a href="#section-invite">Lời mời</a></li>
+      <li><a href="#section-gallery">Album ảnh</a></li>
+      <li><a href="#section-guestbook">Lời chúc</a></li>
+      <li><a href="#section-map">Bản đồ</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>Quốc Hưng & Quỳnh Như</h1>
+    <p>Trân trọng kính mời bạn đến chung vui cùng chúng tôi<br>vào ngày 24.01.2026</p>
+<div id="countdown" style="margin-top: 20px; font-size: 1.2rem;"></div>
+  </header>
+
+  <section id="section-details">
+    <h2 class="section-title">Thông Tin Tiệc Cưới</h2>
+    <div class="details">
+      <h3>Lễ Vu Quy</h3>
+      <p>⏰ 09:00 | 24.01.2026</p>
+      <p>🏡 123 Đường Hoa Hồng, Q.7, TP.HCM</p>
+    </div>
+    <div class="details">
+      <h3>Tiệc Cưới</h3>
+      <p>⏰ 17:30 | 24.01.2026</p>
+      <p>💒 White Palace - 194 Hoàng Văn Thụ, Q. Phú Nhuận, TP.HCM</p>
+    </div>
+  </section>
+
+  <section id="section-invite">
+    <h2 class="section-title">Lời Mời</h2>
+    <p style="text-align: center; font-style: italic;">
+      Chúng tôi rất hạnh phúc khi được sẻ chia khoảnh khắc thiêng liêng này cùng gia đình,<br>
+      người thân và bạn bè thân yêu.
+    </p>
+  </section>
+
+  <section id="section-gallery">
+    <h2 class="section-title">Album Ảnh</h2>
+    <div class="gallery" style="display: flex; flex-wrap: wrap; justify-content: center;">
+      <img src="https://source.unsplash.com/250x250/?wedding,couple" alt="Ảnh cưới 1">
+      <img src="https://source.unsplash.com/251x251/?bride,groom" alt="Ảnh cưới 2">
+      <img src="https://source.unsplash.com/252x252/?wedding,love" alt="Ảnh cưới 3">
+    </div>
+  </section>
+
+<section id="section-guestbook" class="guestbook">
+  <h2 class="section-title">Gửi Lời Chúc</h2>
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScdAKTY1fMfWCmOYebWSK0XLb_QcXVRhkSrhu6DbpRoU7cafA/viewform?usp=sharing&ouid=113917043922176028421" width="100%" height="700" frameborder="0" marginheight="0" marginwidth="0">Đang tải…</iframe>
+</section>
+<section id="loi-chuc-cong-khai">
+  <h2 class="section-title">💌 Những lời chúc yêu thương</h2>
+  <div id="wish-board">Đang tải lời chúc...</div>
+</section>
+  <section id="section-map">
+    <h2 class="section-title">Bản Đồ</h2>
+    <iframe src="https://www.google.com/maps/embed?..." loading="lazy"></iframe>
+  </section>
+
+  <footer>
+    <p>Cảm ơn bạn đã ghé thăm thiệp cưới của Quốc Hưng & Quỳnh Như</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+<script>
+  const countdownEl = document.getElementById("countdown");
+  const weddingDate = new Date("2026-01-24T00:00:00").getTime();
+
+  const updateCountdown = () => {
+    const now = new Date().getTime();
+    const distance = weddingDate - now;
+
+    if (distance < 0) {
+      countdownEl.textContent = "🎉 Hôn lễ đã diễn ra!";
+      clearInterval(timer);
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    countdownEl.textContent = `⏳ Còn lại: ${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây`;
+  };
+
+  const timer = setInterval(updateCountdown, 1000);
+  updateCountdown();
+</script>
+</body>
+</html>

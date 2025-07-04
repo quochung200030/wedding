@@ -211,4 +211,57 @@ iframe {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+/* Hamburger icon styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  margin-left: 8px;
+  background: transparent;
+  border: none;
+  z-index: 2001;
+}
+.hamburger span {
+  height: 4px;
+  width: 28px;
+  background: #b45f06;
+  margin: 4px 0;
+  border-radius: 2px;
+  transition: 0.4s;
+  display: block;
+}
 
+/* Responsive menu */
+@media (max-width: 768px) {
+  nav ul {
+    display: none;
+    flex-direction: column;
+    background: rgba(255,255,255,0.96);
+    position: fixed;
+    top: 56px;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 2000;
+    padding: 0;
+  }
+  nav ul.active {
+    display: flex;
+  }
+  nav ul li {
+    margin: 1rem 0;
+    text-align: center;
+  }
+  .hamburger {
+    display: flex;
+  }
+  nav {
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 12px;
+    height: 56px;
+  }
+}

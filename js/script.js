@@ -74,27 +74,38 @@ async function loadWishesFromCSV() {
     const text = await res.text();
     const rows = text.split('\n').slice(1); // bỏ dòng tiêu đề
 
+    const wishes = [];
+    rows.forEach(line => {
+      const parts = line.split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/);
+      if (!parts || parts.length < 3) return;
+      const name = parts[1]?.replace(/^\"|\"$/g, '').trim() || "Ẩn danh";
+      const message = parts[2]?.replace(/^\"|\"$/g, '').trim() || "";
+      wishes.push({ name, message });
+    });
+
     const board = document.getElementById("wish-board");
     if (!board) return;
     board.innerHTML = "";
 
-    rows.forEach(line => {
-      const parts = line.split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/); // tách theo dấu phẩy ngoài dấu nháy
-      if (!parts || parts.length < 3) return;
+    let current = 0;
+    function showWish(idx) {
+      const wish = wishes[idx];
+      board.innerHTML = `
+        <div style="margin: 1rem auto; padding: 1rem; border: 1px dashed #ccc; border-radius: 8px; max-width: 600px; background-color: #fffdf8; min-height: 60px;">
+          <strong>${wish.name}</strong>: ${wish.message}
+        </div>
+      `;
+    }
 
-      const name = parts[1]?.replace(/^\"|\"$/g, '').trim() || "Ẩn danh";
-      const message = parts[2]?.replace(/^\"|\"$/g, '').trim() || "";
-
-      const div = document.createElement("div");
-      div.style.margin = "1rem auto";
-      div.style.padding = "1rem";
-      div.style.border = "1px dashed #ccc";
-      div.style.borderRadius = "8px";
-      div.style.maxWidth = "600px";
-      div.style.backgroundColor = "#fffdf8";
-      div.innerHTML = `<strong>${name}</strong>: ${message}`;
-      board.appendChild(div);
-    });
+    if (wishes.length > 0) {
+      showWish(current);
+      setInterval(() => {
+        current = (current + 1) % wishes.length;
+        showWish(current);
+      }, 5000); // 5 giây
+    } else {
+      board.innerText = "Chưa có lời chúc nào.";
+    }
   } catch (err) {
     console.error("Lỗi tải lời chúc:", err);
     const board = document.getElementById("wish-board");

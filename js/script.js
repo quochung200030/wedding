@@ -141,3 +141,11 @@ const observer = new IntersectionObserver(entries => {
 document.querySelectorAll('section').forEach(section => {
   observer.observe(section);
 });
+const menuToggle = document.getElementById('menu-toggle');
+const navUl = document.querySelector('nav ul');
+
+if(menuToggle && navUl) {
+  menuToggle.addEventListener('click', () => {
+    navUl.classList.toggle('active');
+  });
+}

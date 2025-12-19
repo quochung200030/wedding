@@ -39,7 +39,7 @@ body {
   100% { transform: rotate(360deg); }
 }
 header {
-  background: url('assets/img/img1.png') center/cover no-repeat;
+  background: url('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e') center/cover no-repeat;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -291,6 +291,7 @@ iframe {
   opacity: 1;
   transform: translateY(0);
 }
+
 
 
 

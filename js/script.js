@@ -42,7 +42,7 @@ function createFallingFlowers() {
 
 // COUNTDOWN
 const countdownEl = document.getElementById('countdown');
-const weddingDate = new Date("2026-01-24T17:30:00");
+const weddingDate = new Date("2026-01-24T11:00:00");
 
 function updateCountdown() {
   const now = new Date();
@@ -149,3 +149,4 @@ if(menuToggle && navUl) {
     navUl.classList.toggle('active');
   });
 }
+

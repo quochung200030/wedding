@@ -39,7 +39,7 @@ body {
   100% { transform: rotate(360deg); }
 }
 header {
-  background: url('../assets/img/img1.png') center/cover no-repeat;
+  background: url('../assets/img/img (2).jpg') center/cover no-repeat;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -291,4 +291,5 @@ iframe {
   opacity: 1;
   transform: translateY(0);
 }
+
 
